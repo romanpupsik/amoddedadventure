@@ -7,7 +7,7 @@ if game.PlaceId == 17041031058 then
         Time = 5
     })
 
-    local Window = OrionLib:MakeWindow({Name = "cursed lib", HidePremium = true, SaveConfig = true, ConfigFolder = "AModdedAdventureFolder"})
+    local Window = OrionLib:MakeWindow({Name = "Cursed Hub", HidePremium = true, IntroText = "Cursed Hub", SaveConfig = true, ConfigFolder = "AModdedAdventureFolder"})
 
     local AutofarmTab = Window:MakeTab({
         Name = "Autofarm",
