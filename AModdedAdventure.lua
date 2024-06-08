@@ -1,3 +1,5 @@
+local plr = game.Players.LocalPlayer
+local char = plr.Character
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 if game.PlaceId == 17041031058 then
     OrionLib:MakeNotification({
@@ -39,8 +41,8 @@ if game.PlaceId == 17041031058 then
                 if item:IsA("Tool") and item:FindFirstChild("Handle") then
                     local char = game:GetService("Players").LocalPlayer.Character
                     if char and char:FindFirstChild("HumanoidRootPart") then
-                        char.HumanoidRootPart.CFrame = item.Handle.CFrame
-                        print("Teleporting to item: "..item.Name)
+                        firetouchinterest(item.Handle,game.Players.LocalPlayer.Character.HumanoidRootPart,1)
+                        print(item.Name)
                     end
                     wait(0.1)
                     if not running then break end
@@ -61,42 +63,67 @@ if game.PlaceId == 17041031058 then
         end    
     })
 
-    local running2 = false
-
-    local function AutofarmBanknotes()
-        while running2 do
-            local items = game.Workspace.Drops:GetDescendants()
-            for _, item in ipairs(items) do
-                if item:IsA("UnionOperation") and item:FindFirstChild("TouchInterest") then
-                    local char = game:GetService("Players").LocalPlayer.Character
-                    if char and char:FindFirstChild("HumanoidRootPart") then
-                        char.HumanoidRootPart.CFrame = item.CFrame
-                        print("Teleporting to banknote...")
-                    end
-                    wait(0.1)
-                    if not running2 then break end
-                end
-            end
-            wait(1)
-        end
-    end
-
-    AutofarmTab:AddToggle({
-        Name = "Autofarm Banknotes",
-        Default = false,
-        Callback = function(Value)
-            running2 = Value
-            if running2 then
-                spawn(AutofarmBanknotes)
-            end
-        end    
+    local OpenGUITab = Window:MakeTab({
+        Name = "Gui",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
     })
 
-    OrionLib:MakeNotification({
-        Name = "Loading",
-        Content = "GUI Loaded!",
-        Image = "rbxassetid://4483345998",
-        Time = 5
+    local OpenGUISection = OpenGUITab:AddSection({
+        Name = "Open GUI"
+    })
+
+    local BlackmarketGUIButton = OpenGUITab:AddButton({
+        Name = "Toggle Blackmarket GUI",
+        Callback = function()
+        if plr.PlayerGui.BlackmarketGUI.Enabled == false then
+            plr.PlayerGui.BlackmarketGUI.Enabled = true
+            OrionLib:MakeNotification({
+            Name = "Blackmarket GUI",
+            Content = "opened!",
+            Image = "rbxassetid://4483345998",
+            Time = 5
+            })
+        else
+            plr.PlayerGui.BlackmarketGUI.Enabled = false
+            OrionLib:MakeNotification({
+            Name = "Blackmarket GUI",
+            Content = "closed!",
+            Image = "rbxassetid://4483345998",
+            Time = 5
+            })
+        end
+        end
+    })
+
+    local ShopGUIButton = OpenGUITab:AddButton({
+        Name = "Toggle Shop GUI",
+        Callback = function()
+        if plr.PlayerGui.ShopGUI.Enabled == false then
+            plr.PlayerGui.ShopGUI.Enabled = true
+            OrionLib:MakeNotification({
+            Name = "Shop GUI",
+            Content = "opened!",
+            Image = "rbxassetid://4483345998",
+            Time = 5
+            })
+        else
+            plr.PlayerGui.ShopGUI.Enabled = false
+            OrionLib:MakeNotification({
+            Name = "Shop GUI",
+            Content = "closed!",
+            Image = "rbxassetid://4483345998",
+            Time = 5
+            })
+        end
+        end
+    })
+
+    local StandStorageButton = OpenGUITab:AddButton({
+        Name = "FireServer Stand Storage",
+        Callback = function()
+        fireclickdetector(Workspace.NPCs.rev4p.ClickDetector)
+        end
     })
 
     local AutoSaleTab = Window:MakeTab({
@@ -106,9 +133,9 @@ if game.PlaceId == 17041031058 then
     })
 
     local AutoSaleSection = AutoSaleTab:AddSection({
-        Name = "Auto Sale"
+        Name = "Coming soon.."
     })
-
+    
     OrionLib:Init()
 else
     OrionLib:MakeNotification({
